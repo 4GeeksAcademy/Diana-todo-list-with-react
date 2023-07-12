@@ -1,54 +1,86 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 
 const Input = () => {
-    const [task, setTask] = useState("");
-    const [taskList, setTaskList] = useState([]);
+  const [task, setTask] = useState("");
+  const [taskList, setTaskList] = useState([]);
 
-
-    //const validateInput = () => {
-    //    
-    //    else console.log("All perfect");
-    //};
-    
-    const handleKeyDown = (event) => {
-        if (event.key === "Enter") {
-          if (task) {
-            setTaskList((prevTaskList) => [...prevTaskList, task]);
-            setTask("");
-          } if (event.key === "Enter" && task === "") alert("The fill is empty!");
-        }
-      };
-
-    const handleErase = (index) => {
-      const updatedTaskList = [...taskList];
-      updatedTaskList.splice(index, 1);
-      setTaskList(updatedTaskList);
-    };
-
-    const handleCheck = () => {
-
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      if (task) {
+        setTaskList((prevTaskList) => [...prevTaskList, { task: task, showIcon: false }
+        ]);
+        setTask("");
+      } else {
+        alert("The fill is empty!");
+      }
     }
+  };
 
-    return (
-        <>
-        <input id="inputField" type="text" value={task} placeholder="Add your task" onChange={(e) => setTask(e.target.value)} onKeyDown={handleKeyDown}/>
+  const handleErase = (index) => {
+    const updatedTaskList = [...taskList];
+    updatedTaskList.splice(index, 1);
+    setTaskList(updatedTaskList);
+  };
 
-        <ul id="inputList" className="justify-content-center" >
+  const handleMouseEnter = (index) => {
+    setTaskList((prevTaskList) => {
+      if (!prevTaskList[index].showIcon) {
+        return prevTaskList.map((item, i) =>
+          i === index ? { ...item, showIcon: true } : item
+        );
+      };
+      return prevTaskList;
+    });
+  };
+
+  const handleMouseLeave = (index) => {
+    setTaskList((prevTaskList) => {
+      if (prevTaskList[index].showIcon) {
+        return prevTaskList.map((item, i) =>
+          i === index ? { ...item, showIcon: false } : item
+        );
+      }
+      return prevTaskList;
+    });
+  };
+
+
+  return (
+    <>
+      <input id="inputField"
+        type="text"
+        value={task}
+        placeholder="Add your task"
+        onChange={(e) => setTask(e.target.value)} onKeyDown={handleKeyDown} />
+
+      <ul
+        className="list__container" >
+          <hr className="custom-hr" />
         {taskList.map((item, index) => (
-          <li className= " justify-content-center m-4 p-1"  key={index}>
-            
-            {item} <FontAwesomeIcon className="float-end p-1 ml-2" icon={faTimes}
-            style={{ "--fa-primary-color": "#000000", "--fa-secondary-color": "#000000" }} 
-            onClick={handleErase} />
+
+            <li
+            className="task"
+            key={index}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={() => handleMouseLeave(index)}>
+
+            {item.task}{" "}
+            {item.showIcon && (
+              <i className="icono"><FontAwesomeIcon
+                icon={faTimes}
+                onClick={() => handleErase(index)}
+              /></i>
+            )}
           </li>
+
         ))}
       </ul>
-
-        </>
-    );
+      <p className="items__counter">{taskList.length} task left</p>
+    </>
+  );
 };
 
 export default Input;

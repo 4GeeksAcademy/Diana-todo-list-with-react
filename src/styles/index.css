@@ -1,12 +1,54 @@
-
-/* 
-
-    You can write your own styles here...
+.general__container {
+    width: 30rem;
+    margin: 0 auto;
     
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+}
 
-*/
+.inputs__container {
+    width: 20rem;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    border: 1px solid rgb(216, 215, 215);
+    padding: 1rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#inputField {
+    border: 1px;
+    display:flex;
+    margin: 0 auto 1rem auto;
+}
+
+.custom-hr {
+    width: 100%;
+    margin: 0;
+  }
+
+.list__container {
+    width: 100%;
+    margin: 0.5rem auto;
+    padding: 0 0.5rem;
+}
+
+.task {
+    width: 100%;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(189, 188, 188);
+    padding: 0.3rem 0 0.3rem 0;
+}
+
+.icono {
+    float:right;
+}
+.icono:hover {
+    color: rgb(163, 2, 2);
+    cursor: pointer;
+}
+
+.items__counter {
+    font-size: 0.7rem;
+    text-align: left ;
+    justify-content: end;
+    margin: 0 0 0 0.5rem;
+}
